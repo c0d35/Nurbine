@@ -3,6 +3,7 @@
  * just code
  * coder@computer.org
  *
+ *
  */
 
 try { WebGLFloatArray; } catch (x) { WebGLFloatArray = Float32Array; }
@@ -229,6 +230,19 @@ Matrix3x3f.determinant = function(a)
     return s;
 };
 
+Matrix3x3f.det = function(a)
+{
+    idx = Matrix3x3f.idx;
+    var s = a[idx(0,0)] * a[idx(1, 1)] * a[idx(2, 2)] +
+            a[idx(0,1)] * a[idx(1, 2)] * a[idx(2, 0)] +
+            a[idx(0,2)] * a[idx(1, 0)] * a[idx(2, 1)] -
+        (   a[idx(2,0)] * a[idx(1, 1)] * a[idx(0, 2)] +
+            a[idx(2,1)] * a[idx(1, 2)] * a[idx(0, 0)] +
+            a[idx(2,2)] * a[idx(1, 0)] * a[idx(0, 1)]   );
+    return s;
+
+}
+
 Matrix3x3f.string = function(a)
 {
     idx = Matrix3x3f.idx;
@@ -236,6 +250,15 @@ Matrix3x3f.string = function(a)
             a[idx(0, 0)] + ", " + a[idx(0, 1)] + ", " + a[idx(0, 2)] + "), \n  " +
             a[idx(1, 0)] + ", " + a[idx(1, 1)] + ", " + a[idx(1, 2)] + "), \n  " +
             a[idx(2, 0)] + ", " + a[idx(2, 1)] + ", " + a[idx(2, 2)] + ")] \n";
+};
+
+Matrix3x3f.string_octave = function(a)
+{
+    idx = Matrix3x3f.idx;
+    return "[" +
+            a[idx(0, 0)] + "," + a[idx(0, 1)] + "," + a[idx(0, 2)] + ";" +
+            a[idx(1, 0)] + "," + a[idx(1, 1)] + "," + a[idx(1, 2)] + ";" +
+            a[idx(2, 0)] + "," + a[idx(2, 1)] + "," + a[idx(2, 2)] + "]";
 };
 
 Matrix4x4f.idx = function(i, j)
@@ -301,7 +324,7 @@ Matrix4x4f.transpose = function(a)
 Matrix4x4f.determinant = function(a)
 {
     idx = Matrix4x4f.idx;
-    var s = a[idx(0, 0)] * (a[idx(1, 1)] * a[idx(2, 2)] - a[idx(2, 1)] * a[idx(1, 2)])
+    var s = a[idx(0, 0)] * (a[idx(1, 1)] * a[idx(2, 2)] - a[idx(2, 1)] * a[idx(1, 2)]) +
             a[idx(1, 0)] * (a[idx(2, 1)] * a[idx(0, 2)] - a[idx(0, 1)] * a[idx(2, 2)]) +
             a[idx(2, 0)] * (a[idx(0, 1)] * a[idx(1, 2)] - a[idx(1, 1)] * a[idx(0, 2)]);
     return s;
