@@ -6,7 +6,7 @@
  *
  */
 
-try { WebGLFloatArray; } catch (x) { WebGLFloatArray = Float32Array; }
+try { WebGLFloatArray; } catch (e) { WebGLFloatArray = Float32Array; }
 glMatrixArrayType = WebGLFloatArray;
 var Vector3Df = {};
 var Vector4Df = {};
