@@ -47,7 +47,7 @@ Vector4Df.create = function(vec0)
 
 
 
-Vector3Df.set = function(dst, src)
+Vector3Df.set = function(dst, srcu)
 {
 
     dst[0] = src[0];
@@ -318,15 +318,28 @@ Matrix4x4f.transpose = function(a)
     s = a[idx(0, 2)]; a[idx(0, 2)] = a[idx(2, 0)]; a[idx(2, 0)] = s;
     s = a[idx(0, 1)]; a[idx(0, 1)] = a[idx(1, 0)]; a[idx(1, 0)] = s;
     s = a[idx(1, 2)]; a[idx(1, 2)] = a[idx(2, 1)]; a[idx(2, 1)] = s;
+    s = a[idx(0, 3)]; a[idx(0, 3)] = a[idx(3, 0)]; a[idx(3, 0)] = s;
+    s = a[idx(1, 3)]; a[idx(1, 3)] = a[idx(3, 1)]; a[idx(3, 1)] = s;
+    s = a[idx(2, 3)]; a[idx(2, 3)] = a[idx(3, 2)]; a[idx(3, 2)] = s;
+
     return a;
 };
 
 Matrix4x4f.determinant = function(a)
 {
     idx = Matrix4x4f.idx;
-    var s = a[idx(0, 0)] * (a[idx(1, 1)] * a[idx(2, 2)] - a[idx(2, 1)] * a[idx(1, 2)]) +
-            a[idx(1, 0)] * (a[idx(2, 1)] * a[idx(0, 2)] - a[idx(0, 1)] * a[idx(2, 2)]) +
-            a[idx(2, 0)] * (a[idx(0, 1)] * a[idx(1, 2)] - a[idx(1, 1)] * a[idx(0, 2)]);
+    var s =  a[idx(2, 0)] * (a[idx(0, 1)] * (a[idx(1, 2)] * a[idx(3, 3)] - a[idx(3, 2)] * a[idx(1, 3)]) +
+                             a[idx(1, 1)] * (a[idx(3, 2)] * a[idx(0, 3)] - a[idx(0, 2)] * a[idx(3, 3)]) +
+                             a[idx(3, 1)] * (a[idx(0, 2)] * a[idx(1, 3)] - a[idx(1, 2)] * a[idx(0, 3)]))  -
+             a[idx(2, 1)] * (a[idx(0, 0)] * (a[idx(1, 2)] * a[idx(3, 3)] - a[idx(3, 2)] * a[idx(1, 3)]) +
+                             a[idx(1, 0)] * (a[idx(3, 2)] * a[idx(0, 3)] - a[idx(0, 2)] * a[idx(3, 3)]) +
+                             a[idx(3, 0)] * (a[idx(0, 2)] * a[idx(1, 3)] - a[idx(1, 2)] * a[idx(3, 0)]))  +
+             a[idx(2, 2)] * (a[idx(0, 0)] * (a[idx(1, 1)] * a[idx(3, 3)] - a[idx(3, 1)] * a[idx(1, 3)]) +
+                             a[idx(1, 0)] * (a[idx(3, 1)] * a[idx(0, 3)] - a[idx(0, 1)] * a[idx(3, 3)]) +
+                             a[idx(3, 0)] * (a[idx(0, 1)] * a[idx(1, 3)] - a[idx(1, 1)] * a[idx(3, 0)]))  -
+             a[idx(2, 3)] * (a[idx(0, 0)] * (a[idx(1, 1)] * a[idx(3, 2)] - a[idx(3, 1)] * a[idx(1, 2)]) +
+                             a[idx(1, 0)] * (a[idx(3, 1)] * a[idx(0, 2)] - a[idx(0, 1)] * a[idx(3, 2)]) +
+                             a[idx(3, 0)] * (a[idx(0, 1)] * a[idx(1, 2)] - a[idx(1, 1)] * a[idx(0, 2)]));  
     return s;
 };
 
